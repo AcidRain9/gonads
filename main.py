@@ -28,8 +28,8 @@ _pass = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH
 _loginbtn = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[@id='loginbtn']")))
 
 # Passing login data
-_id.send_keys(ac.login1)
-_pass.send_keys(base64.b64decode(ac.pass1).decode("utf-8"))
+_id.send_keys(ac.students[0])
+_pass.send_keys(base64.b64decode(ac.paswds[0]).decode("utf-8"))
 _loginbtn.click()
 
 # Loading course
@@ -47,13 +47,17 @@ tmp = ""
 for x in ac.students:
     tmp += x + " INTEGER DEFAULT (0), "
 tmp = tmp[:-2]
-query = "CREATE TABLE test(ID INTEGER PRIMARY KEY AUTOINCREMENT, {0}" + ");"
+query = "CREATE TABLE IF NOT EXISTS test(ID INTEGER PRIMARY KEY AUTOINCREMENT,Assignments TEXT UNIQUE,{0}" + ");"
 query = query.format(tmp)
 
 # Executing query
 conn.execute(query)
 
-# Visiting Assignment Links
-# for assignment in assignments:
-#    print(assignment)
-#    driver.get(assignment['href'])
+# Adding Assignment Links to DB
+for assignment in assignments:
+    tmp = "INSERT OR IGNORE INTO test(Assignments) VALUES ('{0}');"
+    query = tmp.format(assignment['href'])
+    conn.execute(query)
+
+# Commit Changes to DB
+conn.commit()

@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import re
 import logins as ac
 import base64
+import sqlite3
 
 # Setting up Google Chrome/Chromium Instance
 op = Options()
@@ -38,7 +39,21 @@ driver.get(ac.course1)
 soup = BeautifulSoup(driver.page_source, 'html.parser')
 assignments = soup.find_all('a', href=re.compile("https://sktlms\.umt\.edu\.pk/moodle/mod/assign/view\.php\?id="))
 
+# Connect to database
+conn = sqlite3.connect('assignments1.db')
+
+# Prepare the CREATE TABLE query
+tmp = ""
+for x in ac.students:
+    tmp += x + " INTEGER DEFAULT (0), "
+tmp = tmp[:-2]
+query = "CREATE TABLE test(ID INTEGER PRIMARY KEY AUTOINCREMENT, {0}" + ");"
+query = query.format(tmp)
+
+# Executing query
+conn.execute(query)
+
 # Visiting Assignment Links
-for assignment in assignments:
-    print(assignment)
-    driver.get(assignment['href'])
+# for assignment in assignments:
+#    print(assignment)
+#    driver.get(assignment['href'])

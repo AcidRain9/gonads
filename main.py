@@ -32,10 +32,12 @@ conn.commit()
 
 # Parsing Assignments Per User
 tmp = "SELECT Assignments,{0} FROM test"
-for student in ac.students:
+for index, student in enumerate(ac.students):
     query = tmp.format(student)
     result = conn.execute(query).fetchall()
     print(student)
+    browser.restart()
+    browser.login(ac.ids[index], base64.b64decode(ac.paswds[index]).decode("utf-8"))
     for row in result:
         if row[1] == 0:
             browser.visit(row[0])

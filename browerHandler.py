@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -43,9 +44,16 @@ class SetupBrowser:
         self.driver.get(ac.course1)
         # Finding Assignment  Links
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-        assignments = soup.find_all('a',
-                                    href=re.compile("https://sktlms\.umt\.edu\.pk/moodle/mod/assign/view\.php\?id="))
+        assignments = soup.find_all('a', href=re.compile("https://sktlms\.umt\.edu\.pk/moodle/mod/assign/view\.php\?id="))
         return assignments
 
     def visit(self, link):
         self.driver.get(link)
+
+    def exit(self):
+        self.driver.quit()
+
+    def restart(self):
+        self.exit()
+        time.sleep(2)
+        self.driver = webdriver.Chrome(options=self.op)

@@ -25,7 +25,7 @@ beautifulSoup4
   - [ ] Multiple Courses
 - [ ] Multiuser
   - [x] ~~Add Multiple Accounts~~ 
-  - [ ] Check for Submitted Assignments (WIP)
+  - [x] ~~Check for Submitted Assignments~~
   - [ ] Download Assignment if One User Submitted
   - [ ] Upload/Sync Assignment Across All Users
 - [ ] Paraphrasing Assignments

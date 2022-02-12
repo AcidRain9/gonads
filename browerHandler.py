@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -49,3 +50,11 @@ class SetupBrowser:
 
     def visit(self, link):
         self.driver.get(link)
+
+    def exit(self):
+        self.driver.quit()
+
+    def restart(self):
+        self.exit()
+        time.sleep(2)
+        self.driver = webdriver.Chrome(options=self.op)

@@ -28,7 +28,7 @@ _pass = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH
 _loginbtn = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[@id='loginbtn']")))
 
 # Passing login data
-_id.send_keys(ac.students[0])
+_id.send_keys(ac.ids[0])
 _pass.send_keys(base64.b64decode(ac.paswds[0]).decode("utf-8"))
 _loginbtn.click()
 
@@ -61,3 +61,17 @@ for assignment in assignments:
 
 # Commit Changes to DB
 conn.commit()
+
+# Parsing Assignments Per User
+tmp = "SELECT Assignments,{0} FROM test"
+for student in ac.students:
+    query = tmp.format(student)
+    result = conn.execute(query).fetchall()
+    print(student)
+    for row in result:
+        if row[1] == 0:
+            driver.get(row[0])
+            tmp2 = "UPDATE test SET {0} = 1 WHERE Assignments = '{1}'"
+            query2 = tmp2.format(student, row[0])
+            conn.execute(query2)
+            conn.commit()

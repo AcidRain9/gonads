@@ -3,7 +3,7 @@
 # Overview
 Automatically upload assignments and avoid deadlines for UMT SKT 🙂 <br>
 
-If one student uploads an assignment it will be downloaded parapharsed and uploaded to all student accounts, I'm basically making this because of my procrastination I didn't submit any assignment on time, and I had to face the consequences in exam results :(
+If one student uploads an assignment it will be downloaded paraphrased and uploaded to all student accounts, I'm basically making this because of my procrastination I didn't submit any assignment on time, and I had to face the consequences in exam results :(
 
 
 <h2> Dependencies </h2>
@@ -24,8 +24,8 @@ beautifulSoup4
   - [x] ~~One Course~~
   - [ ] Multiple Courses
 - [ ] Multiuser
-  - [ ] Add Multiple Accounts (<i>Work in Progress</i>)
-  - [ ] Check for Submitted Assignments
+  - [x] ~~Add Multiple Accounts~~ 
+  - [ ] Check for Submitted Assignments (WIP)
   - [ ] Download Assignment if One User Submitted
   - [ ] Upload/Sync Assignment Across All Users
 - [ ] Paraphrasing Assignments
@@ -41,11 +41,10 @@ beautifulSoup4
 
  <h2> Current Task </h2>
  
- - [ ] Add Multiple Accounts (WIP)
+ - [ ] Check for Submitted Assignments
  
-      Explore 2d Arrays, Lists, Maps, Sqlite3, MySQL and other methods for temporary or persistant data storage to keep track of students and assignments, I think  sqlite3 will offer good performance and persistant data storage so I will explore it first
-
+ Improve the parsing logic to check for submitted assignments
  <h2> Note </h2>
- This is a proof of concept, the final implementaion will be done using <b>scrapy-splash</b> instead of selenium
+ This is a proof of concept, the final implementation will be done using <b>scrapy-splash</b> instead of selenium
 
 <h3> Don't hesitate to contribute :) </h3>

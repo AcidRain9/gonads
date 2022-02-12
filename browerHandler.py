@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import logins as ac
 from bs4 import BeautifulSoup
+import elements as xpath
 import re
 
 
@@ -28,11 +29,11 @@ class SetupBrowser:
         # Finding Login Fields
         self.driver.get("https://sktlms.umt.edu.pk/")
         _id = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@id='username']")))
+            EC.presence_of_element_located((By.XPATH, xpath.username)))
         _pass = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@id='password']")))
+            EC.presence_of_element_located((By.XPATH, xpath.password)))
         _loginbtn = WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@id='loginbtn']")))
+            EC.element_to_be_clickable((By.XPATH, xpath.login_btn)))
         # Passing login data
         _id.send_keys(studentid)
         _pass.send_keys(passwords)
@@ -44,7 +45,8 @@ class SetupBrowser:
         self.driver.get(ac.course1)
         # Finding Assignment  Links
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-        assignments = soup.find_all('a', href=re.compile("https://sktlms\.umt\.edu\.pk/moodle/mod/assign/view\.php\?id="))
+        assignments = soup.find_all('a',
+                                    href=re.compile("https://sktlms\.umt\.edu\.pk/moodle/mod/assign/view\.php\?id="))
         return assignments
 
     def visit(self, link):
@@ -57,3 +59,7 @@ class SetupBrowser:
         self.exit()
         time.sleep(2)
         self.driver = webdriver.Chrome(options=self.op)
+
+    def get_submission_status(self):
+        status = self.driver.find_element(By.XPATH, xpath.submission_status).text
+        return status

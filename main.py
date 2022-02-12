@@ -41,7 +41,8 @@ for index, student in enumerate(ac.students):
     for row in result:
         if row[1] == 0:
             browser.visit(row[0])
-            tmp2 = "UPDATE test SET {0} = 1 WHERE Assignments = '{1}'"
-            query2 = tmp2.format(student, row[0])
-            conn.execute(query2)
-            conn.commit()
+            if browser.get_submission_status() == "Submitted for grading":
+                tmp2 = "UPDATE test SET {0} = 1 WHERE Assignments = '{1}'"
+                query2 = tmp2.format(student, row[0])
+                conn.execute(query2)
+                conn.commit()

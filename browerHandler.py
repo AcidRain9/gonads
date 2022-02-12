@@ -43,7 +43,8 @@ class SetupBrowser:
         self.driver.get(ac.course1)
         # Finding Assignment  Links
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-        assignments = soup.find_all('a', href=re.compile("https://sktlms\.umt\.edu\.pk/moodle/mod/assign/view\.php\?id="))
+        assignments = soup.find_all('a',
+                                    href=re.compile("https://sktlms\.umt\.edu\.pk/moodle/mod/assign/view\.php\?id="))
         return assignments
 
     def visit(self, link):

@@ -63,3 +63,4 @@ class SetupBrowser:
     def get_submission_status(self):
         status = self.driver.find_element(By.XPATH, xpath.submission_status).text
         return status
+# todo implement functions to download assignment

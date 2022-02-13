@@ -46,3 +46,26 @@ for index, student in enumerate(ac.students):
                 query2 = tmp2.format(student, row[0])
                 conn.execute(query2)
                 conn.commit()
+
+# Main loop to Download
+
+# Fetch all assignments' statuses of all students
+
+
+# Get Student Names
+q = ""
+for x in ac.students:
+    q += x + ","
+q = q[:-1]
+
+for assignment in assignments:
+    p = assignment['href']
+    tmp = "SELECT {0} FROM test WHERE assignments = '{1}';"
+    query = tmp.format(q, p)
+    result = conn.execute(query).fetchall()
+    for row in result:
+        print(row)
+        for element in row:
+            print(element)
+
+# todo Simplify main.py file break complex logics into separate files

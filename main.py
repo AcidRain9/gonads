@@ -2,6 +2,7 @@ import logins as ac
 import base64
 import sqlite3
 from browerHandler import SetupBrowser
+import assignmentHandler
 
 browser = SetupBrowser()
 browser.login(ac.ids[0], base64.b64decode(ac.paswds[0]).decode("utf-8"))
@@ -59,13 +60,9 @@ for x in ac.students:
 q = q[:-1]
 
 for assignment in assignments:
-    p = assignment['href']
+    assignment_link = assignment['href']
     tmp = "SELECT {0} FROM test WHERE assignments = '{1}';"
-    query = tmp.format(q, p)
+    query = tmp.format(q, assignment_link)
     result = conn.execute(query).fetchall()
     for row in result:
-        print(row)
-        for element in row:
-            print(element)
-
-# todo Simplify main.py file break complex logics into separate files
+        assignmentHandler.download_assignment_student(row, assignment_link)

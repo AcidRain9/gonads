@@ -26,7 +26,7 @@ beautifulSoup4
 - [ ] Multiuser
   - [x] ~~Add Multiple Accounts~~ 
   - [x] ~~Check for Submitted Assignments~~
-  - [ ] Download Assignment if One User Submitted
+  - [x] ~~Download Assignment if One User Submitted~~
   - [ ] Upload/Sync Assignment Across All Users
 - [ ] Paraphrasing Assignments
   - [x] ~~Basic Paraphrasing with <b>NLTK</b>~~

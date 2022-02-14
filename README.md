@@ -41,9 +41,9 @@ beautifulSoup4
 
  <h2> Current Task </h2>
  
- - [ ] Check for Submitted Assignments
+ - [ ] Upload Assignments
  
- Improve the parsing logic to check for submitted assignments
+ Find out the best strategy to upload assignments
  <h2> Note </h2>
  This is a proof of concept, the final implementation will be done using <b>scrapy-splash</b> instead of selenium
 

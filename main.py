@@ -1,7 +1,7 @@
 import logins as ac
 import base64
 import sqlite3
-from browerHandler import SetupBrowser
+from browserHandler import SetupBrowser
 import assignmentHandler
 
 browser = SetupBrowser()

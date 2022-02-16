@@ -19,12 +19,12 @@ class SetupBrowser:
         self.op.add_argument("start-maximized")
         self.op.add_argument("--incognito")
         self.op.add_experimental_option("excludeSwitches", ['enable-automation'])
-        prefs = {
+        self.prefs = {
             'profile.managed_default_content_settings.images': 2,
             'profile.managed_default_content_settings.javascript': 2,
             "download.default_directory": "/home/arbaz/Documents/assignments"
         }
-        self.op.add_experimental_option("prefs", prefs)
+        self.op.add_experimental_option("prefs", self.prefs)
         self.driver = webdriver.Chrome(options=self.op)
 
     def login(self, studentid, passwords):
@@ -74,8 +74,10 @@ class SetupBrowser:
         path = p.format(url[1])
         while not os.path.exists(path):
             time.sleep(2)
+        if os.path.exists(path):
+            return True
 
-    def fetch_assignment_link(self, assignment):
+    def fetch_assignment_download_link(self, assignment):
         assignment_link_and_name = []
         self.driver.get(assignment)
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
@@ -87,4 +89,4 @@ class SetupBrowser:
             assignment_link_and_name.append(dl.get_text())
         return assignment_link_and_name
 
-# todo implement functions to download assignment
+# todo implement functions to upload assignment

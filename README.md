@@ -28,9 +28,12 @@ beautifulSoup4
   - [x] ~~Check for Submitted Assignments~~
   - [x] ~~Download Assignment if One User Submitted~~
   - [ ] Upload/Sync Assignment Across All Users
+    - [x] ~~Basic Implementation~~
+    - [ ] Dynamically change assignment file names
+    - [ ] Dynamically change the cover page of assignments
 - [ ] Paraphrasing Assignments
   - [x] ~~Basic Paraphrasing with <b>NLTK</b>~~
-  - [ ] Advanced Paraphrasing
+  - [ ] Advanced Paraphrasing 
   - [ ] Explore python-docx module
 - [ ] Figure Out <i><b>XHR Requests</b></i> for dynamically loaded course sections
 - [ ] Generate CSV/EXCEL file

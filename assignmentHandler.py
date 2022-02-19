@@ -97,10 +97,26 @@ def prepare_assignment_file(directory, index):
     for lexical in lexicals:
         pattern = re.compile(lexical, re.IGNORECASE)
         assignment = pattern.sub("", assignment)
-    final = assignment.strip()
-    print(final)
-    shutil.copy('/etc/hostname', '/var/tmp/testhostname')
-    os.rename(project_files[0], directory+final)
+    final_filename = assignment.strip()
+    extension = ""
+    if ".docx" in final_filename:
+        extension = ".docx"
+    else:
+        extension = ".pdf"
+    final_filename = final_filename.replace(".docx", "")
+    final_filename = final_filename.replace(".pdf", "")
+    print(final_filename)
+    # saving file
+    final_filename = directory + final_filename + " - " + ac.students[index] + " " + ac.ids[index] + extension
+    shutil.copy(project_files[0], final_filename)
+    return final_filename
+
+
+def remove_assignment_file(assignment_file):
+    if os.path.isfile(assignment_file):
+        os.remove(assignment_file)
+    else:
+        print("The file does not exist")
 
 
 def upload_assignment_student(array, assignment):

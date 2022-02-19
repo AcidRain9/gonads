@@ -2,6 +2,7 @@ import os
 import random
 from enum import Enum
 import shutil
+import databaseHandler
 # Remove the imports below, handle all logic in browserHandler
 
 from bs4 import BeautifulSoup
@@ -77,11 +78,11 @@ def download_assignment_student(array, assignment):
         browser.assignment_download_manager(get_link)
         print(i)
     elif status == Status.all_students_submitted:
-        print("All students have submitted the Assignment")
+        print("No file to Download - All students have submitted the Assignment")
     elif status == Status.no_student_submitted:
-        print("No student submitted")
+        print("No file to Download - No student submitted")
     else:
-        print("unknown error")
+        print("Download - unknown error")
 
 
 def prepare_assignment_file(directory, index):
@@ -119,19 +120,25 @@ def remove_assignment_file(assignment_file):
         print("The file does not exist")
 
 
-def upload_assignment_student(array, assignment):
+def upload_assignment_student(array, assignment_link):
     status = check_assignment_submission_statuses(array)
     if status == Status.some_students_submitted:
         nally_students = get_specific_students_who_did_not_submit(array)
         for student in nally_students:
             browser = SetupBrowser()
             browser.login(ac.ids[student], base64.b64decode(ac.paswds[student]).decode("utf-8"))
-            assignment_upload_link = browser.fetch_assignment_upload_link(assignment)
-            browser.upload_given_assignment(assignment_upload_link, "IT3161 Assignment 1.docx")
-            print("Uploaded Assignment of" + ac.ids[student])
+            assignment_upload_link = browser.fetch_assignment_upload_link(assignment_link)
+            directory = browser.prefs.get("download.default_directory")
+            print(directory)
+            filex = prepare_assignment_file(directory + "/", student)
+            print(filex)
+            browser.upload_given_assignment(assignment_upload_link, filex)
+            print("Uploaded Assignment of " + ac.ids[student] + " " + assignment_link)
+            databaseHandler.update_student_assign_status_to_positive(ac.students[student], assignment_link)
+            remove_assignment_file(filex)
     elif status == Status.all_students_submitted:
-        print("All students have submitted the Assignment")
+        print("No file to Upload - All students have submitted the Assignment")
     elif status == Status.no_student_submitted:
-        print("No student submitted")
+        print("No file to Upload - No student submitted")
     else:
-        print("unknown error")
+        print("Upload - unknown error")

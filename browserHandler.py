@@ -105,9 +105,9 @@ class SetupBrowser:
     def upload_given_assignment(self, assignment_link, file):
         self.driver.get(assignment_link)
         upload_dialog = self.driver.find_element(By.XPATH, xpath.choose_file)
-        directory = self.prefs.get("download.default_directory")
-        print(directory + "/")  # + file)
-        upload_dialog.send_keys(directory + "/" + file)
+        # directory = self.prefs.get("download.default_directory")
+        # print(directory + "/")  # + file)
+        upload_dialog.send_keys(file)
         upload_button = self.driver.find_element(By.XPATH, xpath.upload_button)
         upload_button.click()
 

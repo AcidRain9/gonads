@@ -89,4 +89,26 @@ class SetupBrowser:
             assignment_link_and_name.append(dl.get_text())
         return assignment_link_and_name
 
+    def fetch_assignment_upload_link(self, assignment):
+        assignment += "&action=editsubmission"
+        self.driver.get(assignment)
+        soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+        draft_manager = soup.find('object',
+                                  data=re.compile(
+                                      "https://sktlms\.umt\.edu\.pk/moodle/repository/draftfiles_manager\.php\?env=filemanager&action=browse&itemid="))
+        draft_manager = draft_manager.get('data')
+        filepicker = draft_manager.replace("draftfiles_manager.php", "filepicker.php")
+        filepicker += "&action=list&draftpath=%2F&savepath=%2F&repo_id=4"
+        # self.driver.get(filepicker)
+        return filepicker
+
+    def upload_given_assignment(self, assignment_link, file):
+        self.driver.get(assignment_link)
+        upload_dialog = self.driver.find_element(By.XPATH, xpath.choose_file)
+        directory = self.prefs.get("download.default_directory")
+        print(directory + "/")  # + file)
+        upload_dialog.send_keys(directory + "/" + file)
+        upload_button = self.driver.find_element(By.XPATH, xpath.upload_button)
+        upload_button.click()
+
 # todo implement functions to upload assignment

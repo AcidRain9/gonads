@@ -59,6 +59,9 @@ for x in ac.students:
     q += x + ","
 q = q[:-1]
 
+# Download if one student submitted, and upload across all accounts while dynamically changing filenames, cover pages
+# and paraphrasing the assignments
+
 for assignment in assignments:
     assignment_link = assignment['href']
     tmp = "SELECT {0} FROM test WHERE assignments = '{1}';"
@@ -66,3 +69,4 @@ for assignment in assignments:
     result = conn.execute(query).fetchall()
     for row in result:
         assignmentHandler.download_assignment_student(row, assignment_link)
+        assignmentHandler.upload_assignment_student(row, assignment_link)

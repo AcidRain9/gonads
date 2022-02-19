@@ -29,7 +29,7 @@ beautifulSoup4
   - [x] ~~Download Assignment if One User Submitted~~
   - [ ] Upload/Sync Assignment Across All Users
     - [x] ~~Basic Implementation~~
-    - [ ] Dynamically change assignment file names
+    - [x] ~~Dynamically change assignment file names~~
     - [ ] Dynamically change the cover page of assignments
 - [ ] Paraphrasing Assignments
   - [x] ~~Basic Paraphrasing with <b>NLTK</b>~~

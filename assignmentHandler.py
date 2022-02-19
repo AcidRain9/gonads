@@ -1,6 +1,7 @@
+import os
 import random
 from enum import Enum
-
+import shutil
 # Remove the imports below, handle all logic in browserHandler
 
 from bs4 import BeautifulSoup
@@ -10,6 +11,7 @@ from browserHandler import SetupBrowser
 import logins as ac
 import base64
 import elements as xpath
+from glob import glob
 
 
 class Status(Enum):
@@ -82,28 +84,38 @@ def download_assignment_student(array, assignment):
         print("unknown error")
 
 
-# Proof of Concept
+def prepare_assignment_file(directory, index):
+    # Find file in directory
+    project_files = glob(directory + "*.docx") + glob(directory + "*.pdf")
+    print(project_files)
+    assignment = project_files[0]
+    assignment = assignment.replace(directory, "")
+    print(assignment)
+    # Removing names and ids from assignment name
+    lexicals = ["Arbaz", "Ahmed", "Mughal", "Hira", "Sher", "Saad", "Muhammad", "M\.", "Mohammad",
+                ".Sadeeq"] + ac.ids + ac.students
+    for lexical in lexicals:
+        pattern = re.compile(lexical, re.IGNORECASE)
+        assignment = pattern.sub("", assignment)
+    final = assignment.strip()
+    print(final)
+    shutil.copy('/etc/hostname', '/var/tmp/testhostname')
+    os.rename(project_files[0], directory+final)
 
-browser = SetupBrowser()
-directory = browser.prefs.get("download.default_directory")
-file = "1. Course Introduction..mp4"
 
-
-def upload_assignment(assignment):
-    assignment += "&action=editsubmission"
-    browser.visit(assignment)
-    soup = BeautifulSoup(browser.driver.page_source, 'html.parser')
-    draft_manager = soup.find('object',
-                              data=re.compile(
-                                  "https://sktlms\.umt\.edu\.pk/moodle/repository/draftfiles_manager\.php\?env=filemanager&action=browse&itemid="))
-    draft_manager = draft_manager.get('data')
-    filepicker = draft_manager.replace("draftfiles_manager.php", "filepicker.php")
-    filepicker += "&action=list&draftpath=%2F&savepath=%2F&repo_id=4"
-    browser.visit(filepicker)
-    upload_dialog = browser.driver.find_element(By.XPATH, xpath.choose_file)
-    print(browser.prefs.get("download.default_directory"))
-    print(directory + "/" + file)
-    upload_dialog.send_keys(directory + "/" + file)
-    upload_button = browser.driver.find_element(By.XPATH, xpath.upload_button)
-    upload_button.click()
-    browser.visit("https://sktlms.umt.edu.pk/moodle/mod/assign/view.php?id=217247&action=editsubmission")
+def upload_assignment_student(array, assignment):
+    status = check_assignment_submission_statuses(array)
+    if status == Status.some_students_submitted:
+        nally_students = get_specific_students_who_did_not_submit(array)
+        for student in nally_students:
+            browser = SetupBrowser()
+            browser.login(ac.ids[student], base64.b64decode(ac.paswds[student]).decode("utf-8"))
+            assignment_upload_link = browser.fetch_assignment_upload_link(assignment)
+            browser.upload_given_assignment(assignment_upload_link, "IT3161 Assignment 1.docx")
+            print("Uploaded Assignment of" + ac.ids[student])
+    elif status == Status.all_students_submitted:
+        print("All students have submitted the Assignment")
+    elif status == Status.no_student_submitted:
+        print("No student submitted")
+    else:
+        print("unknown error")

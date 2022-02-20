@@ -31,6 +31,9 @@ beautifulSoup4
     - [x] ~~Basic Implementation~~
     - [x] ~~Dynamically change assignment file names~~
     - [ ] Dynamically change the cover page of assignments
+- [ ] Check for Enrollment
+  - [ ] Skip if enrollment is closed
+  - [ ] Automatically enroll if possible
 - [ ] Paraphrasing Assignments
   - [x] ~~Basic Paraphrasing with <b>NLTK</b>~~
   - [ ] Advanced Paraphrasing 
@@ -44,10 +47,7 @@ beautifulSoup4
 
  <h2> Current Task </h2>
  
- - [ ] Upload Assignments
- 
- Find out the best strategy to upload assignments
- <h2> Note </h2>
+A refactor is needed is to better organize the code, and make it modular to add new features <h2> Note </h2>
  This is a proof of concept, the final implementation will be done using <b>scrapy-splash</b> instead of selenium
 
 <h3> Don't hesitate to contribute :) </h3>
